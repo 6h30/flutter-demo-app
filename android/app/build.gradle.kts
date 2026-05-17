@@ -1,16 +1,7 @@
-import java.util.Properties
-import java.io.FileInputStream
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
-}
-
-val keystoreProperties = Properties()
-val keystorePropertiesFile = rootProject.file("android/key.properties")
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
@@ -36,13 +27,14 @@ android {
     }
 
     signingConfigs {
-    create("release") {
-        keyAlias = keystoreProperties.getProperty("keyAlias")
-        keyPassword = keystoreProperties.getProperty("keyPassword")
-        storeFile = file(keystoreProperties.getProperty("storeFile"))
-        storePassword = keystoreProperties.getProperty("storePassword")
+        create("release") {
+            keyAlias = "upload"
+            keyPassword = "Flutter123"
+            storeFile = file("../../upload-keystore.jks")
+            storePassword = "Flutter123"
+        }
     }
-}
+
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
